@@ -19,4 +19,5 @@ gcloud services enable \
     gkeconnect.googleapis.com \
     gkehub.googleapis.com \
     cloudresourcemanager.googleapis.com \
-    artifactregistry.googleapis.com
+    artifactregistry.googleapis.com \
+    cloudbuild.googleapis.com
