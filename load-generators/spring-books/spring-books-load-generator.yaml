@@ -29,13 +29,14 @@ spec:
         sidecar.istio.io/rewriteAppHTTPProbers: "true"
     spec:
       terminationGracePeriodSeconds: 5
+      serviceAccountName: spring-media-cluster-sa
       restartPolicy: Always
       containers:
       - name: main
-        image: ${ARTIFACT_REGISTRY}/spring-books-load-generator:latest
+        image: us-central1-docker.pkg.dev/migrate-kf-anthos-demo/spring-media-cluster/spring-books-load-generator:latest
         env:
         - name: FRONTEND_ADDR
-          value: ${SPRING_BOOKS_URL}
+          value: "productpage.spring-books.svc.cluster.local"
         - name: USERS
           value: "20"
         resources:

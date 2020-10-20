@@ -15,7 +15,7 @@
 # limitations under the License.
 
 import random
-from locust import HttpLocust, TaskSet, between
+from locust import HttpUser, TaskSet, between
 
 albums = [
     '5801c98c-4db0-432e-94a3-1f10ca38c3e7',
@@ -46,6 +46,11 @@ class UserBehavior(TaskSet):
         browseAlbum: 10,
         viewAlbums: 3}
 
-class WebsiteUser(HttpLocust):
-    task_set = UserBehavior
+class WebsiteUser(HttpUser):
+    tasks = [UserBehavior]
     wait_time = between(1, 10)
+
+
+
+
+

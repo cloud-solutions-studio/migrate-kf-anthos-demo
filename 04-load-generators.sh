@@ -6,16 +6,7 @@ export SPRING_MUSIC_URL=$(kf apps -o json | jq -r ".items[0].status.urls[0]")
 # Connect to the Spring Media cluster
 gcloud container clusters get-credentials ${CLUSTER_NAME} --zone ${CLUSTER_LOCATION}
 
-# First, deploy the Spring Books Load Generator
-cd ~/migrate-kf-anthos-demo/load-generators/spring-books
-
-# Build the Spring Books Load Generator container image and store in Artifact Registry
-gcloud builds submit --tag ${ARTIFACT_REGISTRY}/spring-books-load-generator
-
-# Deploy the Spring Books Load Generator to the cluster
-envsubst < spring-books-load-generator.yaml | kubectl apply -f -
-
-# Next, deploy the Spring Music Load Generator
+# Deploy the Spring Music Load Generator
 cd ~/migrate-kf-anthos-demo/load-generators/spring-music
 
 # Build the Spring Music Load Generator container image and store in Artifact Registry

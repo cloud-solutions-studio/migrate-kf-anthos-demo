@@ -15,18 +15,11 @@
 # limitations under the License.
 
 import random
-from locust import HttpLocust, TaskSet, between
+from locust import HttpUser, task, between
 
-def index(l):
-    l.client.get("/")
-
-class UserBehavior(TaskSet):
-
-    def on_start(self):
-        index(self)
-
-    tasks = {index: 10}
-
-class WebsiteUser(HttpLocust):
-    task_set = UserBehavior
+class WebsiteUser(HttpUser):
     wait_time = between(1, 10)
+
+    @task
+    def viewBooks(self):
+        self.client.get("/productpage")
