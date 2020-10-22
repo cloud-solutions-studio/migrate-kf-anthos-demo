@@ -5,9 +5,11 @@ applications:
   random-route: true
   path: build/libs/spring-music-1.0.jar
   stack: cflinuxfs3
+  buildpacks:
+  - java_buildpack
   services:
   - spring-music-db
-  env:
-    JBP_CONFIG_SPRING_AUTO_RECONFIGURATION: '{enabled: false}'
-#    JBP_CONFIG_OPEN_JDK_JRE: '{ jre: { version: 11.+ } }'
+#  env:
+#    JBP_CONFIG_SPRING_AUTO_RECONFIGURATION: '{enabled: false}'
+#    BP_AUTO_RECONFIGURATION_ENABLED: false
 
