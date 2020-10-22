@@ -11,5 +11,4 @@ applications:
   - spring-music-db
   env:
     JBP_CONFIG_SPRING_AUTO_RECONFIGURATION: '{enabled: false}'
-    # BP_AUTO_RECONFIGURATION_ENABLED: false
 
