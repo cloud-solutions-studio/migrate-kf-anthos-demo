@@ -9,7 +9,7 @@ applications:
   - java_buildpack
   services:
   - spring-music-db
-#  env:
-#    JBP_CONFIG_SPRING_AUTO_RECONFIGURATION: '{enabled: false}'
-#    BP_AUTO_RECONFIGURATION_ENABLED: false
+  env:
+    JBP_CONFIG_SPRING_AUTO_RECONFIGURATION: '{enabled: false}'
+    # BP_AUTO_RECONFIGURATION_ENABLED: false
 

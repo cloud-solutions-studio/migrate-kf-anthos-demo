@@ -30,7 +30,7 @@ spec:
     spec:
       terminationGracePeriodSeconds: 5
       restartPolicy: Always
-      serviceAccountName: spring-media-prod-sa
+      serviceAccountName: spring-media-load-generator
       containers:
       - name: main
         image: ${ARTIFACT_REGISTRY}/spring-music-load-generator:latest
