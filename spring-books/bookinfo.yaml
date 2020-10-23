@@ -46,11 +46,11 @@ spec:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: bookinfo-details
+  name: spring-books-details
   labels:
     account: details
   annotations:
-    iam.gke.io/gcp-service-account: bookinfo-details@${PROJECT_ID}.iam.gserviceaccount.com
+    iam.gke.io/gcp-service-account: spring-books-details@${PROJECT_ID}.iam.gserviceaccount.com
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -71,7 +71,7 @@ spec:
         app: details
         version: v1
     spec:
-      serviceAccountName: bookinfo-details
+      serviceAccountName: spring-books-details
       containers:
       - name: details
         image: docker.io/istio/examples-bookinfo-details-v1:1.16.2
@@ -99,11 +99,11 @@ spec:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: bookinfo-ratings
+  name: spring-books-ratings
   labels:
     account: ratings
   annotations:
-    iam.gke.io/gcp-service-account: bookinfo-ratings@${PROJECT_ID}.iam.gserviceaccount.com
+    iam.gke.io/gcp-service-account: spring-books-ratings@${PROJECT_ID}.iam.gserviceaccount.com
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -124,7 +124,7 @@ spec:
         app: ratings
         version: v1
     spec:
-      serviceAccountName: bookinfo-ratings
+      serviceAccountName: spring-books-ratings
       containers:
       - name: ratings
         image: docker.io/istio/examples-bookinfo-ratings-v1:1.16.2
@@ -152,11 +152,11 @@ spec:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: bookinfo-reviews
+  name: spring-books-reviews
   labels:
     account: reviews
   annotations:
-    iam.gke.io/gcp-service-account: bookinfo-reviews@${PROJECT_ID}.iam.gserviceaccount.com
+    iam.gke.io/gcp-service-account: spring-books-reviews@${PROJECT_ID}.iam.gserviceaccount.com
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -177,7 +177,7 @@ spec:
         app: reviews
         version: v1
     spec:
-      serviceAccountName: bookinfo-reviews
+      serviceAccountName: spring-books-reviews
       containers:
       - name: reviews
         image: docker.io/istio/examples-bookinfo-reviews-v1:1.16.2
@@ -217,7 +217,7 @@ spec:
         app: reviews
         version: v2
     spec:
-      serviceAccountName: bookinfo-reviews
+      serviceAccountName: spring-books-reviews
       containers:
       - name: reviews
         image: docker.io/istio/examples-bookinfo-reviews-v2:1.16.2
@@ -257,7 +257,7 @@ spec:
         app: reviews
         version: v3
     spec:
-      serviceAccountName: bookinfo-reviews
+      serviceAccountName: spring-books-reviews
       containers:
       - name: reviews
         image: docker.io/istio/examples-bookinfo-reviews-v3:1.16.2
@@ -298,11 +298,11 @@ spec:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: bookinfo-productpage
+  name: spring-books-productpage
   labels:
     account: productpage
   annotations:
-    iam.gke.io/gcp-service-account: bookinfo-productpage@${PROJECT_ID}.iam.gserviceaccount.com
+    iam.gke.io/gcp-service-account: spring-books-productpage@${PROJECT_ID}.iam.gserviceaccount.com
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -323,7 +323,7 @@ spec:
         app: productpage
         version: v1
     spec:
-      serviceAccountName: bookinfo-productpage
+      serviceAccountName: spring-books-productpage
       containers:
       - name: productpage
         image: docker.io/istio/examples-bookinfo-productpage-v1:1.16.2

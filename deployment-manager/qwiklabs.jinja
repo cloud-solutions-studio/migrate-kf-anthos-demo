@@ -102,41 +102,41 @@ resources:
     serviceAccount:
       displayName: spring-media-prod-connect
 - type: gcp-types/iam-v1:projects.serviceAccounts
-  name: bookinfo-details
+  name: spring-books-details
   metadata:
     dependsOn:
     - iamcredentials-enable
   properties:
-    accountId: bookinfo-details
+    accountId: spring-books-details
     serviceAccount:
-      displayName: bookinfo-details
+      displayName: spring-books-details
 - type: gcp-types/iam-v1:projects.serviceAccounts
-  name: bookinfo-reviews
+  name: spring-books-reviews
   metadata:
     dependsOn:
     - iamcredentials-enable
   properties:
-    accountId: bookinfo-reviews
+    accountId: spring-books-reviews
     serviceAccount:
-      displayName: bookinfo-reviews
+      displayName: spring-books-reviews
 - type: gcp-types/iam-v1:projects.serviceAccounts
-  name: bookinfo-ratings
+  name: spring-books-ratings
   metadata:
     dependsOn:
     - iamcredentials-enable
   properties:
-    accountId: bookinfo-ratings
+    accountId: spring-books-ratings
     serviceAccount:
-      displayName: bookinfo-ratings
+      displayName: spring-books-ratings
 - type: gcp-types/iam-v1:projects.serviceAccounts
-  name: bookinfo-productpage
+  name: spring-books-productpage
   metadata:
     dependsOn:
     - iamcredentials-enable
   properties:
-    accountId: bookinfo-productpage
+    accountId: spring-books-productpage
     serviceAccount:
-      displayName: bookinfo-productpage
+      displayName: spring-books-productpage
 - type: gcp-types/iam-v1:projects.serviceAccounts
   name: spring-media-load-generator
   metadata:

@@ -93,73 +93,73 @@ gcloud container clusters get-credentials ${PROD_CLUSTER_NAME} \
 # Spring Books Details Service Account
 gcloud iam service-accounts add-iam-policy-binding \
   --role roles/iam.workloadIdentityUser \
-  --member "serviceAccount:${PROJECT_ID}.svc.id.goog[spring-books/bookinfo-details]" \
-  bookinfo-details@${PROJECT_ID}.iam.gserviceaccount.com
+  --member "serviceAccount:${PROJECT_ID}.svc.id.goog[spring-books/spring-books-details]" \
+  spring-books-details@${PROJECT_ID}.iam.gserviceaccount.com
 
 gcloud projects add-iam-policy-binding ${PROJECT_ID} \
-  --member="serviceAccount:bookinfo-details@${PROJECT_ID}.iam.gserviceaccount.com" \
+  --member="serviceAccount:spring-books-details@${PROJECT_ID}.iam.gserviceaccount.com" \
   --role="roles/monitoring.metricWriter"
 
 gcloud projects add-iam-policy-binding ${PROJECT_ID} \
-  --member="serviceAccount:bookinfo-details@${PROJECT_ID}.iam.gserviceaccount.com" \
+  --member="serviceAccount:spring-books-details@${PROJECT_ID}.iam.gserviceaccount.com" \
   --role="roles/cloudtrace.agent"
 
 gcloud projects add-iam-policy-binding ${PROJECT_ID} \
-  --member="serviceAccount:bookinfo-details@${PROJECT_ID}.iam.gserviceaccount.com" \
+  --member="serviceAccount:spring-books-details@${PROJECT_ID}.iam.gserviceaccount.com" \
   --role="roles/storage.admin"
 
 # Spring Books Ratings Service Account
 gcloud iam service-accounts add-iam-policy-binding \
   --role roles/iam.workloadIdentityUser \
-  --member "serviceAccount:${PROJECT_ID}.svc.id.goog[spring-books/bookinfo-ratings]" \
-  bookinfo-ratings@${PROJECT_ID}.iam.gserviceaccount.com
+  --member "serviceAccount:${PROJECT_ID}.svc.id.goog[spring-books/spring-books-ratings]" \
+  spring-books-ratings@${PROJECT_ID}.iam.gserviceaccount.com
 
 gcloud projects add-iam-policy-binding ${PROJECT_ID} \
-  --member="serviceAccount:bookinfo-ratings@${PROJECT_ID}.iam.gserviceaccount.com" \
+  --member="serviceAccount:spring-books-ratings@${PROJECT_ID}.iam.gserviceaccount.com" \
   --role="roles/monitoring.metricWriter"
 
 gcloud projects add-iam-policy-binding ${PROJECT_ID} \
-  --member="serviceAccount:bookinfo-ratings@${PROJECT_ID}.iam.gserviceaccount.com" \
+  --member="serviceAccount:spring-books-ratings@${PROJECT_ID}.iam.gserviceaccount.com" \
   --role="roles/cloudtrace.agent"
 
 gcloud projects add-iam-policy-binding ${PROJECT_ID} \
-  --member="serviceAccount:bookinfo-ratings@${PROJECT_ID}.iam.gserviceaccount.com" \
+  --member="serviceAccount:spring-books-ratings@${PROJECT_ID}.iam.gserviceaccount.com" \
   --role="roles/storage.admin"
 
 # Spring Books Reviews Service Account
 gcloud iam service-accounts add-iam-policy-binding \
   --role roles/iam.workloadIdentityUser \
-  --member "serviceAccount:${PROJECT_ID}.svc.id.goog[spring-books/bookinfo-reviews]" \
-  bookinfo-reviews@${PROJECT_ID}.iam.gserviceaccount.com
+  --member "serviceAccount:${PROJECT_ID}.svc.id.goog[spring-books/spring-books-reviews]" \
+  spring-books-reviews@${PROJECT_ID}.iam.gserviceaccount.com
 
 gcloud projects add-iam-policy-binding ${PROJECT_ID} \
-  --member="serviceAccount:bookinfo-reviews@${PROJECT_ID}.iam.gserviceaccount.com" \
+  --member="serviceAccount:spring-books-reviews@${PROJECT_ID}.iam.gserviceaccount.com" \
   --role="roles/monitoring.metricWriter"
 
 gcloud projects add-iam-policy-binding ${PROJECT_ID} \
-  --member="serviceAccount:bookinfo-reviews@${PROJECT_ID}.iam.gserviceaccount.com" \
+  --member="serviceAccount:spring-books-reviews@${PROJECT_ID}.iam.gserviceaccount.com" \
   --role="roles/cloudtrace.agent"
 
 gcloud projects add-iam-policy-binding ${PROJECT_ID} \
-  --member="serviceAccount:bookinfo-reviews@${PROJECT_ID}.iam.gserviceaccount.com" \
+  --member="serviceAccount:spring-books-reviews@${PROJECT_ID}.iam.gserviceaccount.com" \
   --role="roles/storage.admin"
 
 # Spring Books Product Page Service Account
 gcloud iam service-accounts add-iam-policy-binding \
   --role roles/iam.workloadIdentityUser \
-  --member "serviceAccount:${PROJECT_ID}.svc.id.goog[spring-books/bookinfo-productpage]" \
-  bookinfo-productpage@${PROJECT_ID}.iam.gserviceaccount.com
+  --member "serviceAccount:${PROJECT_ID}.svc.id.goog[spring-books/spring-books-productpage]" \
+  spring-books-productpage@${PROJECT_ID}.iam.gserviceaccount.com
 
 gcloud projects add-iam-policy-binding ${PROJECT_ID} \
-  --member="serviceAccount:bookinfo-productpage@${PROJECT_ID}.iam.gserviceaccount.com" \
+  --member="serviceAccount:spring-books-productpage@${PROJECT_ID}.iam.gserviceaccount.com" \
   --role="roles/monitoring.metricWriter"
 
 gcloud projects add-iam-policy-binding ${PROJECT_ID} \
-  --member="serviceAccount:bookinfo-productpage@${PROJECT_ID}.iam.gserviceaccount.com" \
+  --member="serviceAccount:spring-books-productpage@${PROJECT_ID}.iam.gserviceaccount.com" \
   --role="roles/cloudtrace.agent"
 
 gcloud projects add-iam-policy-binding ${PROJECT_ID} \
-  --member="serviceAccount:bookinfo-productpage@${PROJECT_ID}.iam.gserviceaccount.com" \
+  --member="serviceAccount:spring-books-productpage@${PROJECT_ID}.iam.gserviceaccount.com" \
   --role="roles/storage.admin"
 
 # Spring Media Load Generator Service Account
