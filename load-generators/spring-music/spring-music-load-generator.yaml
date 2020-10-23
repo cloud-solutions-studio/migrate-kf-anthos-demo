@@ -11,6 +11,13 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: spring-media-load-generator
+  annotations:
+    iam.gke.io/gcp-service-account: spring-media-load-generator@${PROJECT_ID}.iam.gserviceaccount.com
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:

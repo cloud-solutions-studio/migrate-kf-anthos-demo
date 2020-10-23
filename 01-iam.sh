@@ -96,11 +96,6 @@ gcloud iam service-accounts add-iam-policy-binding \
   --member "serviceAccount:${PROJECT_ID}.svc.id.goog[spring-books/bookinfo-details]" \
   bookinfo-details@${PROJECT_ID}.iam.gserviceaccount.com
 
-kubectl annotate serviceaccount \
-  --namespace spring-books \
-  bookinfo-details \
-  iam.gke.io/gcp-service-account=bookinfo-details@${PROJECT_ID}.iam.gserviceaccount.com
-
 gcloud projects add-iam-policy-binding ${PROJECT_ID} \
   --member="serviceAccount:bookinfo-details@${PROJECT_ID}.iam.gserviceaccount.com" \
   --role="roles/monitoring.metricWriter"
@@ -118,11 +113,6 @@ gcloud iam service-accounts add-iam-policy-binding \
   --role roles/iam.workloadIdentityUser \
   --member "serviceAccount:${PROJECT_ID}.svc.id.goog[spring-books/bookinfo-ratings]" \
   bookinfo-ratings@${PROJECT_ID}.iam.gserviceaccount.com
-
-kubectl annotate serviceaccount \
-  --namespace spring-books \
-  bookinfo-ratings \
-  iam.gke.io/gcp-service-account=bookinfo-ratings@${PROJECT_ID}.iam.gserviceaccount.com
 
 gcloud projects add-iam-policy-binding ${PROJECT_ID} \
   --member="serviceAccount:bookinfo-ratings@${PROJECT_ID}.iam.gserviceaccount.com" \
@@ -142,11 +132,6 @@ gcloud iam service-accounts add-iam-policy-binding \
   --member "serviceAccount:${PROJECT_ID}.svc.id.goog[spring-books/bookinfo-reviews]" \
   bookinfo-reviews@${PROJECT_ID}.iam.gserviceaccount.com
 
-kubectl annotate serviceaccount \
-  --namespace spring-books \
-  bookinfo-reviews \
-  iam.gke.io/gcp-service-account=bookinfo-reviews@${PROJECT_ID}.iam.gserviceaccount.com
-
 gcloud projects add-iam-policy-binding ${PROJECT_ID} \
   --member="serviceAccount:bookinfo-reviews@${PROJECT_ID}.iam.gserviceaccount.com" \
   --role="roles/monitoring.metricWriter"
@@ -165,11 +150,6 @@ gcloud iam service-accounts add-iam-policy-binding \
   --member "serviceAccount:${PROJECT_ID}.svc.id.goog[spring-books/bookinfo-productpage]" \
   bookinfo-productpage@${PROJECT_ID}.iam.gserviceaccount.com
 
-kubectl annotate serviceaccount \
-  --namespace spring-books \
-  bookinfo-productpage \
-  iam.gke.io/gcp-service-account=bookinfo-productpage@${PROJECT_ID}.iam.gserviceaccount.com
-
 gcloud projects add-iam-policy-binding ${PROJECT_ID} \
   --member="serviceAccount:bookinfo-productpage@${PROJECT_ID}.iam.gserviceaccount.com" \
   --role="roles/monitoring.metricWriter"
@@ -180,4 +160,22 @@ gcloud projects add-iam-policy-binding ${PROJECT_ID} \
 
 gcloud projects add-iam-policy-binding ${PROJECT_ID} \
   --member="serviceAccount:bookinfo-productpage@${PROJECT_ID}.iam.gserviceaccount.com" \
+  --role="roles/storage.admin"
+
+# Spring Media Load Generator Service Account
+gcloud iam service-accounts add-iam-policy-binding \
+  --role roles/iam.workloadIdentityUser \
+  --member "serviceAccount:${PROJECT_ID}.svc.id.goog[default/spring-media-load-generator]" \
+  spring-media-load-generator@${PROJECT_ID}.iam.gserviceaccount.com
+
+gcloud projects add-iam-policy-binding ${PROJECT_ID} \
+  --member="serviceAccount:spring-media-load-generator@${PROJECT_ID}.iam.gserviceaccount.com" \
+  --role="roles/monitoring.metricWriter"
+
+gcloud projects add-iam-policy-binding ${PROJECT_ID} \
+  --member="serviceAccount:spring-media-load-generator@${PROJECT_ID}.iam.gserviceaccount.com" \
+  --role="roles/cloudtrace.agent"
+
+gcloud projects add-iam-policy-binding ${PROJECT_ID} \
+  --member="serviceAccount:spring-media-load-generator@${PROJECT_ID}.iam.gserviceaccount.com" \
   --role="roles/storage.admin"

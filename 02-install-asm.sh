@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Install kpt package
+sudo apt-get update && sudo apt-get install -y google-cloud-sdk-kpt
 
 # Initialize your project to ready it for installation. Among other things, this command creates a service account to let control plane components,
 # such as the sidecar proxy, securely access your project's data and resources.

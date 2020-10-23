@@ -49,6 +49,8 @@ metadata:
   name: bookinfo-details
   labels:
     account: details
+  annotations:
+    iam.gke.io/gcp-service-account: bookinfo-details@${PROJECT_ID}.iam.gserviceaccount.com
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -100,6 +102,8 @@ metadata:
   name: bookinfo-ratings
   labels:
     account: ratings
+  annotations:
+    iam.gke.io/gcp-service-account: bookinfo-ratings@${PROJECT_ID}.iam.gserviceaccount.com
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -151,6 +155,8 @@ metadata:
   name: bookinfo-reviews
   labels:
     account: reviews
+  annotations:
+    iam.gke.io/gcp-service-account: bookinfo-reviews@${PROJECT_ID}.iam.gserviceaccount.com
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -295,6 +301,8 @@ metadata:
   name: bookinfo-productpage
   labels:
     account: productpage
+  annotations:
+    iam.gke.io/gcp-service-account: bookinfo-productpage@${PROJECT_ID}.iam.gserviceaccount.com
 ---
 apiVersion: apps/v1
 kind: Deployment
