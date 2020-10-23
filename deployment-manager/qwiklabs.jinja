@@ -1,0 +1,301 @@
+resources:
+- type: deploymentmanager.v2.virtual.enableService
+  name: container-enable
+  properties:
+    consumerId: "project:{{ env['project'] }}"
+    serviceName: container.googleapis.com
+- type: deploymentmanager.v2.virtual.enableService
+  name: compute-enable
+  properties:
+    consumerId: "project:{{ env['project'] }}"
+    serviceName: compute.googleapis.com
+- type: deploymentmanager.v2.virtual.enableService
+  name: monitoring-enable
+  properties:
+    consumerId: "project:{{ env['project'] }}"
+    serviceName: monitoring.googleapis.com
+- type: deploymentmanager.v2.virtual.enableService
+  name: logging-enable
+  properties:
+    consumerId: "project:{{ env['project'] }}"
+    serviceName: logging.googleapis.com
+- type: deploymentmanager.v2.virtual.enableService
+  name: cloudtrace-enable
+  properties:
+    consumerId: "project:{{ env['project'] }}"
+    serviceName: cloudtrace.googleapis.com
+- type: deploymentmanager.v2.virtual.enableService
+  name: meshca-enable
+  properties:
+    consumerId: "project:{{ env['project'] }}"
+    serviceName: meshca.googleapis.com
+- type: deploymentmanager.v2.virtual.enableService
+  name: meshtelemetry-enable
+  properties:
+    consumerId: "project:{{ env['project'] }}"
+    serviceName: meshtelemetry.googleapis.com
+- type: deploymentmanager.v2.virtual.enableService
+  name: meshconfig-enable
+  properties:
+    consumerId: "project:{{ env['project'] }}"
+    serviceName: meshconfig.googleapis.com
+- type: deploymentmanager.v2.virtual.enableService
+  name: iamcredentials-enable
+  properties:
+    consumerId: "project:{{ env['project'] }}"
+    serviceName: iamcredentials.googleapis.com
+- type: deploymentmanager.v2.virtual.enableService
+  name: gkeconnect-enable
+  properties:
+    consumerId: "project:{{ env['project'] }}"
+    serviceName: gkeconnect.googleapis.com
+- type: deploymentmanager.v2.virtual.enableService
+  name: gkehub-enable
+  properties:
+    consumerId: "project:{{ env['project'] }}"
+    serviceName: gkehub.googleapis.com
+- type: deploymentmanager.v2.virtual.enableService
+  name: cloudresourcemanager-enable
+  properties:
+    consumerId: "project:{{ env['project'] }}"
+    serviceName: cloudresourcemanager.googleapis.com
+- type: deploymentmanager.v2.virtual.enableService
+  name: artifactregistry-enable
+  properties:
+    consumerId: "project:{{ env['project'] }}"
+    serviceName: artifactregistry.googleapis.com
+- type: deploymentmanager.v2.virtual.enableService
+  name: cloudbuild-enable
+  properties:
+    consumerId: "project:{{ env['project'] }}"
+    serviceName: cloudbuild.googleapis.com
+- type: deploymentmanager.v2.virtual.enableService
+  name: anthos-enable
+  properties:
+    consumerId: "project:{{ env['project'] }}"
+    serviceName: anthos.googleapis.com
+- type: gcp-types/iam-v1:projects.serviceAccounts
+  name: spring-media-prod-sa
+  metadata:
+    dependsOn:
+    - iamcredentials-enable
+  properties:
+    accountId: spring-media-prod-sa
+    serviceAccount:
+      displayName: spring-media-prod-sa
+- type: gcp-types/iam-v1:projects.serviceAccounts
+  name: spring-media-dev-sa
+  metadata:
+    dependsOn:
+    - iamcredentials-enable
+  properties:
+    accountId: spring-media-dev-sa
+    serviceAccount:
+      displayName: spring-media-dev-sa
+- type: gcp-types/iam-v1:projects.serviceAccounts
+  name: spring-media-prod-connect
+  metadata:
+    dependsOn:
+    - iamcredentials-enable
+  properties:
+    accountId: spring-media-prod-connect
+    serviceAccount:
+      displayName: spring-media-prod-connect
+- type: gcp-types/iam-v1:projects.serviceAccounts
+  name: bookinfo-details
+  metadata:
+    dependsOn:
+    - iamcredentials-enable
+  properties:
+    accountId: bookinfo-details
+    serviceAccount:
+      displayName: bookinfo-details
+- type: gcp-types/iam-v1:projects.serviceAccounts
+  name: bookinfo-reviews
+  metadata:
+    dependsOn:
+    - iamcredentials-enable
+  properties:
+    accountId: bookinfo-reviews
+    serviceAccount:
+      displayName: bookinfo-reviews
+- type: gcp-types/iam-v1:projects.serviceAccounts
+  name: bookinfo-ratings
+  metadata:
+    dependsOn:
+    - iamcredentials-enable
+  properties:
+    accountId: bookinfo-ratings
+    serviceAccount:
+      displayName: bookinfo-ratings
+- type: gcp-types/iam-v1:projects.serviceAccounts
+  name: bookinfo-productpage
+  metadata:
+    dependsOn:
+    - iamcredentials-enable
+  properties:
+    accountId: bookinfo-productpage
+    serviceAccount:
+      displayName: bookinfo-productpage
+- type: gcp-types/iam-v1:projects.serviceAccounts
+  name: spring-media-load-generator
+  metadata:
+    dependsOn:
+    - iamcredentials-enable
+  properties:
+    accountId: spring-media-load-generator
+    serviceAccount:
+      displayName: spring-media-load-generator
+- type: gcp-types/container-v1beta1:projects.locations.clusters
+  name: spring-media-prod
+  metadata:
+    dependsOn:
+    - container-enable
+    - compute-enable
+    - iamcredentials-enable
+    - cloudresourcemanager-enable
+    - spring-media-prod-sa
+  properties:
+    parent: projects/{{ env["project"] }}/locations/us-central1-a
+    cluster:
+      name: spring-media-prod
+      locations:
+      - us-central1-a
+      network: projects/{{ env["project"] }}/global/networks/default
+      subnetwork: projects/{{ env["project"] }}/regions/us-central1/subnetworks/default
+      releaseChannel:
+        channel: REGULAR
+      monitoringService: monitoring.googleapis.com/kubernetes
+      loggingService: logging.googleapis.com/kubernetes
+      addonsConfig:
+        httpLoadBalancing:
+          disabled: false
+        horizontalPodAutoscaling:
+          disabled: false
+        kubernetesDashboard:
+          disabled: true
+        networkPolicyConfig:
+          disabled: false
+      workloadIdentityConfig:
+        workloadPool: {{ env["project"] }}.svc.id.goog
+      networkPolicy:
+        provider: CALICO
+        enabled: true
+      ipAllocationPolicy:
+        useIpAliases: true
+      defaultMaxPodsConstraint:
+        maxPodsPerNode: 110
+      databaseEncryption:
+        state: DECRYPTED
+      resourceLabels:
+        mesh_id: proj-{{ env["project_number"] }}
+      nodePools:
+      - name: default-pool
+        initialNodeCount: 4
+        locations:
+        - us-central1-a
+        config:
+          machineType: e2-standard-4
+          diskSizeGb: 100
+          oauthScopes:
+          - https://www.googleapis.com/auth/cloud-platform
+          serviceAccount: spring-media-prod-sa@{{ env["project"] }}.iam.gserviceaccount.com
+          metadata:
+            disable-legacy-endpoints: "true"
+          imageType: COS
+          diskType: pd-standard
+          shieldedInstanceConfig:
+            enableIntegrityMonitoring: true
+        management:
+            autoUpgrade: true
+            autoRepair: true
+        maxPodsConstraint:
+          maxPodsPerNode: 110
+        upgradeSettings:
+          maxSurge: 1
+- type: gcp-types/container-v1beta1:projects.locations.clusters
+  name: spring-media-dev
+  metadata:
+    dependsOn:
+    - container-enable
+    - compute-enable
+    - iamcredentials-enable
+    - cloudresourcemanager-enable
+    - spring-media-dev-sa
+  properties:
+    parent: projects/{{ env["project"] }}/locations/us-central1-a
+    cluster:
+      name: spring-media-dev
+      locations:
+      - us-central1-a
+      network: projects/{{ env["project"] }}/global/networks/default
+      subnetwork: projects/{{ env["project"] }}/regions/us-central1/subnetworks/default
+      releaseChannel:
+        channel: REGULAR
+      monitoringService: monitoring.googleapis.com/kubernetes
+      loggingService: logging.googleapis.com/kubernetes
+      addonsConfig:
+        httpLoadBalancing:
+          disabled: false
+        horizontalPodAutoscaling:
+          disabled: false
+        kubernetesDashboard:
+          disabled: true
+        networkPolicyConfig:
+          disabled: false
+      workloadIdentityConfig:
+        workloadPool: {{ env["project"] }}.svc.id.goog
+      networkPolicy:
+        provider: CALICO
+        enabled: true
+      ipAllocationPolicy:
+        useIpAliases: true
+      defaultMaxPodsConstraint:
+        maxPodsPerNode: 110
+      databaseEncryption:
+        state: DECRYPTED
+      nodePools:
+      - name: default-pool
+        initialNodeCount: 4
+        config:
+          machineType: e2-standard-4
+          diskSizeGb: 100
+          oauthScopes:
+          - https://www.googleapis.com/auth/cloud-platform
+          metadata:
+            disable-legacy-endpoints: "true"
+          imageType: COS
+          serviceAccount: spring-media-dev-sa@{{ env["project"] }}.iam.gserviceaccount.com
+          diskType: pd-standard
+          shieldedInstanceConfig:
+            enableIntegrityMonitoring: true
+        management:
+          autoUpgrade: true
+          autoRepair: true
+        maxPodsConstraint:
+          maxPodsPerNode: 110
+        upgradeSettings:
+          maxSurge: 1
+- type: gcp-types/artifactregistry-v1beta1:projects.locations.repositories
+  name: kf-artifact-registry-prod
+  metadata:
+    dependsOn:
+    - artifactregistry-enable
+  properties:
+    project: {{ env["project"] }}
+    location: us-central1
+    repositoryId: spring-media-prod
+    name: spring-media-prod
+    format: DOCKER
+- type: gcp-types/artifactregistry-v1beta1:projects.locations.repositories
+  name: kf-artifact-registry-dev
+  metadata:
+    dependsOn:
+    - artifactregistry-enable
+  properties:
+    project: {{ env["project"] }}
+    location: us-central1
+    repositoryId: spring-media-dev
+    name: spring-media-dev
+    format: DOCKER
+
