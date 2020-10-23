@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Spring Media Production Cluster
 # -------------------------------
 # Create an environment variable for the URI of the Spring Media cluster

@@ -18,6 +18,16 @@ gcloud projects add-iam-policy-binding ${PROJECT_ID} \
   --member="serviceAccount:${PROD_CLUSTER_NAME}-sa@${PROJECT_ID}.iam.gserviceaccount.com" \
   --role="roles/monitoring.metricWriter"
 
+# Give the cluster service account logging writer role for write access to Cloud Logging
+gcloud projects add-iam-policy-binding ${PROJECT_ID} \
+  --member="serviceAccount:${PROD_CLUSTER_NAME}-sa@${PROJECT_ID}.iam.gserviceaccount.com" \
+  --role="roles/logging.logWriter"
+
+# Give the cluster service account error reporting writer role for write access to Cloud Error Reporting
+gcloud projects add-iam-policy-binding ${PROJECT_ID} \
+  --member="serviceAccount:${PROD_CLUSTER_NAME}-sa@${PROJECT_ID}.iam.gserviceaccount.com" \
+  --role="roles/errorreporting.writer"
+
 # Associate the cluster's identity namespace with the cluster.
 gcloud iam service-accounts add-iam-policy-binding \
     "${PROD_CLUSTER_NAME}-sa@${PROJECT_ID}.iam.gserviceaccount.com" \
@@ -48,6 +58,16 @@ gcloud projects add-iam-policy-binding ${PROJECT_ID} \
 gcloud projects add-iam-policy-binding ${PROJECT_ID} \
   --member="serviceAccount:${DEV_CLUSTER_NAME}-sa@${PROJECT_ID}.iam.gserviceaccount.com" \
   --role="roles/monitoring.metricWriter"
+
+# Give the cluster service account logging writer role for write access to Cloud Logging
+gcloud projects add-iam-policy-binding ${PROJECT_ID} \
+  --member="serviceAccount:${DEV_CLUSTER_NAME}-sa@${PROJECT_ID}.iam.gserviceaccount.com" \
+  --role="roles/logging.logWriter"
+
+# Give the cluster service account error reporting writer role for write access to Cloud Error Reporting
+gcloud projects add-iam-policy-binding ${PROJECT_ID} \
+  --member="serviceAccount:${DEV_CLUSTER_NAME}-sa@${PROJECT_ID}.iam.gserviceaccount.com" \
+  --role="roles/errorreporting.writer"
 
 # Associate the cluster's identity namespace with the cluster.
 gcloud iam service-accounts add-iam-policy-binding \
@@ -106,6 +126,14 @@ gcloud projects add-iam-policy-binding ${PROJECT_ID} \
 
 gcloud projects add-iam-policy-binding ${PROJECT_ID} \
   --member="serviceAccount:spring-books-details@${PROJECT_ID}.iam.gserviceaccount.com" \
+  --role="roles/logging.logWriter"
+
+gcloud projects add-iam-policy-binding ${PROJECT_ID} \
+  --member="serviceAccount:spring-books-details@${PROJECT_ID}.iam.gserviceaccount.com" \
+  --role="roles/errorreporting.writer"
+
+gcloud projects add-iam-policy-binding ${PROJECT_ID} \
+  --member="serviceAccount:spring-books-details@${PROJECT_ID}.iam.gserviceaccount.com" \
   --role="roles/storage.admin"
 
 # Spring Books Ratings Service Account
@@ -121,6 +149,14 @@ gcloud projects add-iam-policy-binding ${PROJECT_ID} \
 gcloud projects add-iam-policy-binding ${PROJECT_ID} \
   --member="serviceAccount:spring-books-ratings@${PROJECT_ID}.iam.gserviceaccount.com" \
   --role="roles/cloudtrace.agent"
+
+gcloud projects add-iam-policy-binding ${PROJECT_ID} \
+  --member="serviceAccount:spring-books-ratings@${PROJECT_ID}.iam.gserviceaccount.com" \
+  --role="roles/logging.logWriter"
+
+gcloud projects add-iam-policy-binding ${PROJECT_ID} \
+  --member="serviceAccount:spring-books-ratings@${PROJECT_ID}.iam.gserviceaccount.com" \
+  --role="roles/errorreporting.writer"
 
 gcloud projects add-iam-policy-binding ${PROJECT_ID} \
   --member="serviceAccount:spring-books-ratings@${PROJECT_ID}.iam.gserviceaccount.com" \
@@ -142,6 +178,14 @@ gcloud projects add-iam-policy-binding ${PROJECT_ID} \
 
 gcloud projects add-iam-policy-binding ${PROJECT_ID} \
   --member="serviceAccount:spring-books-reviews@${PROJECT_ID}.iam.gserviceaccount.com" \
+  --role="roles/logging.logWriter"
+
+gcloud projects add-iam-policy-binding ${PROJECT_ID} \
+  --member="serviceAccount:spring-books-reviews@${PROJECT_ID}.iam.gserviceaccount.com" \
+  --role="roles/errorreporting.writer"
+
+gcloud projects add-iam-policy-binding ${PROJECT_ID} \
+  --member="serviceAccount:spring-books-reviews@${PROJECT_ID}.iam.gserviceaccount.com" \
   --role="roles/storage.admin"
 
 # Spring Books Product Page Service Account
@@ -160,6 +204,14 @@ gcloud projects add-iam-policy-binding ${PROJECT_ID} \
 
 gcloud projects add-iam-policy-binding ${PROJECT_ID} \
   --member="serviceAccount:spring-books-productpage@${PROJECT_ID}.iam.gserviceaccount.com" \
+  --role="roles/logging.logWriter"
+
+gcloud projects add-iam-policy-binding ${PROJECT_ID} \
+  --member="serviceAccount:spring-books-productpage@${PROJECT_ID}.iam.gserviceaccount.com" \
+  --role="roles/errorreporting.writer"
+
+gcloud projects add-iam-policy-binding ${PROJECT_ID} \
+  --member="serviceAccount:spring-books-productpage@${PROJECT_ID}.iam.gserviceaccount.com" \
   --role="roles/storage.admin"
 
 # Spring Media Load Generator Service Account
@@ -175,6 +227,14 @@ gcloud projects add-iam-policy-binding ${PROJECT_ID} \
 gcloud projects add-iam-policy-binding ${PROJECT_ID} \
   --member="serviceAccount:spring-media-load-generator@${PROJECT_ID}.iam.gserviceaccount.com" \
   --role="roles/cloudtrace.agent"
+
+gcloud projects add-iam-policy-binding ${PROJECT_ID} \
+  --member="serviceAccount:spring-media-load-generator@${PROJECT_ID}.iam.gserviceaccount.com" \
+  --role="roles/logging.logWriter"
+
+gcloud projects add-iam-policy-binding ${PROJECT_ID} \
+  --member="serviceAccount:spring-media-load-generator@${PROJECT_ID}.iam.gserviceaccount.com" \
+  --role="roles/errorreporting.writer"
 
 gcloud projects add-iam-policy-binding ${PROJECT_ID} \
   --member="serviceAccount:spring-media-load-generator@${PROJECT_ID}.iam.gserviceaccount.com" \
