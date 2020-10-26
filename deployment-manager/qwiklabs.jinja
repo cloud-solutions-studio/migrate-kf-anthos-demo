@@ -1,14 +1,17 @@
 resources:
 - type: deploymentmanager.v2.virtual.enableService
-  name: container-enable
-  properties:
-    consumerId: "project:{{ env['project'] }}"
-    serviceName: container.googleapis.com
-- type: deploymentmanager.v2.virtual.enableService
   name: compute-enable
   properties:
     consumerId: "project:{{ env['project'] }}"
     serviceName: compute.googleapis.com
+- type: deploymentmanager.v2.virtual.enableService
+  name: container-enable
+  metadata:
+    dependsOn:
+    - compute-enable
+  properties:
+    consumerId: "project:{{ env['project'] }}"
+    serviceName: container.googleapis.com
 - type: deploymentmanager.v2.virtual.enableService
   name: monitoring-enable
   properties:
@@ -66,14 +69,12 @@ resources:
     serviceName: artifactregistry.googleapis.com
 - type: deploymentmanager.v2.virtual.enableService
   name: cloudbuild-enable
+  metadata:
+    dependsOn:
+    - container-enable
   properties:
     consumerId: "project:{{ env['project'] }}"
     serviceName: cloudbuild.googleapis.com
-- type: deploymentmanager.v2.virtual.enableService
-  name: anthos-enable
-  properties:
-    consumerId: "project:{{ env['project'] }}"
-    serviceName: anthos.googleapis.com
 - type: gcp-types/iam-v1:projects.serviceAccounts
   name: spring-media-prod-sa
   metadata:
