@@ -1,8 +1,9 @@
-# Install jq
+# Install dependencies for Load Generators
 sudo apt-get -y install jq
+sudo apt-get install -y siege
 
 # Connect to the Spring Media cluster
-gcloud container clusters get-credentials ${PROD_CLUSTER_NAME} --zone ${CLUSTER_LOCATION}
+gcloud container clusters get-credentials ${PROD_CLUSTER_NAME} --project=${PROJECT_ID} --zone=${CLUSTER_LOCATION}
 
 # Export relevent environment variables
 export PROD_ARTIFACT_REGISTRY=${COMPUTE_REGION}-docker.pkg.dev/${PROJECT_ID}/${PROD_CLUSTER_NAME}
@@ -21,8 +22,5 @@ envsubst < spring-music-load-generator.yaml | kubectl apply -f -
 
 # Spring Books Load Generator
 # -------------------------------
-# Install Siege Load Generator for Spring Books application
-sudo apt-get install -y siege
-
 # Run Siege Load Generator in the background (will continue running if Cloud Shell is closed)
-siege http://$SPRING_BOOKS_URL/productpage/ &
+siege http://$SPRING_BOOKS_URL:80/productpage &

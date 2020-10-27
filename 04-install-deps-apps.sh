@@ -91,7 +91,3 @@ kf target -s spring-music
 kf create-service postgresql 11-7-0 spring-music-db -c '{"postgresqlDatabase":"smdb", "postgresDatabase":"smdb"}'
 kf push spring-music --no-start
 kf start spring-music
-
-# Remove the .kube/config file and .kf file to ensure Development resources get deployed in the Development cluster
-rm ~/.kube/config
-rm ~/.kf
