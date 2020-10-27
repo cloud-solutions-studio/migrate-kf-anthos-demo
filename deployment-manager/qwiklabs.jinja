@@ -16,6 +16,9 @@ resources:
     serviceName: compute.googleapis.com
 - type: deploymentmanager.v2.virtual.enableService
   name: container-enable
+  metadata:
+    dependsOn:
+    - compute-enable
   properties:
     consumerId: "project:{{ env['project'] }}"
     serviceName: container.googleapis.com
@@ -71,6 +74,9 @@ resources:
     serviceName: artifactregistry.googleapis.com
 - type: deploymentmanager.v2.virtual.enableService
   name: cloudbuild-enable
+  metadata:
+    dependsOn:
+    - container-enable
   properties:
     consumerId: "project:{{ env['project'] }}"
     serviceName: cloudbuild.googleapis.com
