@@ -11,120 +11,66 @@ resources:
     serviceName: iam.googleapis.com
 - type: deploymentmanager.v2.virtual.enableService
   name: compute-enable
-  metadata:
-    dependsOn:
-    - iamcredentials-enable
-    - iam-enable
   properties:
     consumerId: "project:{{ env['project'] }}"
     serviceName: compute.googleapis.com
 - type: deploymentmanager.v2.virtual.enableService
   name: container-enable
-  metadata:
-    dependsOn:
-    - compute-enable
-    - iamcredentials-enable
-    - iam-enable
   properties:
     consumerId: "project:{{ env['project'] }}"
     serviceName: container.googleapis.com
 - type: deploymentmanager.v2.virtual.enableService
   name: monitoring-enable
-  metadata:
-    dependsOn:
-    - iamcredentials-enable
-    - iam-enable
   properties:
     consumerId: "project:{{ env['project'] }}"
     serviceName: monitoring.googleapis.com
 - type: deploymentmanager.v2.virtual.enableService
   name: logging-enable
-  metadata:
-    dependsOn:
-    - iamcredentials-enable
-    - iam-enable
   properties:
     consumerId: "project:{{ env['project'] }}"
     serviceName: logging.googleapis.com
 - type: deploymentmanager.v2.virtual.enableService
   name: cloudtrace-enable
-  metadata:
-    dependsOn:
-    - iamcredentials-enable
-    - iam-enable
   properties:
     consumerId: "project:{{ env['project'] }}"
     serviceName: cloudtrace.googleapis.com
 - type: deploymentmanager.v2.virtual.enableService
   name: meshca-enable
-  metadata:
-    dependsOn:
-    - iamcredentials-enable
-    - iam-enable
   properties:
     consumerId: "project:{{ env['project'] }}"
     serviceName: meshca.googleapis.com
 - type: deploymentmanager.v2.virtual.enableService
   name: meshtelemetry-enable
-  metadata:
-    dependsOn:
-    - iamcredentials-enable
-    - iam-enable
   properties:
     consumerId: "project:{{ env['project'] }}"
     serviceName: meshtelemetry.googleapis.com
 - type: deploymentmanager.v2.virtual.enableService
   name: meshconfig-enable
-  metadata:
-    dependsOn:
-    - iamcredentials-enable
-    - iam-enable
   properties:
     consumerId: "project:{{ env['project'] }}"
     serviceName: meshconfig.googleapis.com
 - type: deploymentmanager.v2.virtual.enableService
   name: gkeconnect-enable
-  metadata:
-    dependsOn:
-    - iamcredentials-enable
-    - iam-enable
   properties:
     consumerId: "project:{{ env['project'] }}"
     serviceName: gkeconnect.googleapis.com
 - type: deploymentmanager.v2.virtual.enableService
   name: gkehub-enable
-  metadata:
-    dependsOn:
-    - iamcredentials-enable
-    - iam-enable
   properties:
     consumerId: "project:{{ env['project'] }}"
     serviceName: gkehub.googleapis.com
 - type: deploymentmanager.v2.virtual.enableService
   name: cloudresourcemanager-enable
-  metadata:
-    dependsOn:
-    - iamcredentials-enable
-    - iam-enable
   properties:
     consumerId: "project:{{ env['project'] }}"
     serviceName: cloudresourcemanager.googleapis.com
 - type: deploymentmanager.v2.virtual.enableService
   name: artifactregistry-enable
-  metadata:
-    dependsOn:
-    - iamcredentials-enable
-    - iam-enable
   properties:
     consumerId: "project:{{ env['project'] }}"
     serviceName: artifactregistry.googleapis.com
 - type: deploymentmanager.v2.virtual.enableService
   name: cloudbuild-enable
-  metadata:
-    dependsOn:
-    - container-enable
-    - iamcredentials-enable
-    - iam-enable
   properties:
     consumerId: "project:{{ env['project'] }}"
     serviceName: cloudbuild.googleapis.com
