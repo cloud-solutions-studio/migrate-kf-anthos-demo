@@ -83,10 +83,6 @@ gcloud beta artifacts repositories add-iam-policy-binding ${DEV_CLUSTER_NAME} \
   --role="roles/artifactregistry.writer"
 
 # -------------------------------
-# Configure Docker to use the gcloud command-line tool to authenticate requests to Artifact Registry.
-gcloud auth configure-docker ${COMPUTE_REGION}-docker.pkg.dev
-
-# -------------------------------
 # Create an environment variable for the Connect service account that will register the cluster to the environ.
 export CONNECT_SERVICE_ACCOUNT=${PROD_CLUSTER_NAME}-connect
 

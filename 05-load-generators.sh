@@ -23,4 +23,4 @@ envsubst < spring-music-load-generator.yaml | kubectl apply -f -
 # Spring Books Load Generator
 # -------------------------------
 # Run Siege Load Generator in the background (will continue running if Cloud Shell is closed)
-siege http://$SPRING_BOOKS_URL:80/productpage &
+siege http://${SPRING_BOOKS_URL}:80/productpage &

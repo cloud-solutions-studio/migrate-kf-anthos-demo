@@ -76,7 +76,7 @@ istioctl install \
 kubectl apply -f asm/canonical-service/controller.yaml
 
 # Sleep 1 minute
-echo "Waiting for Istio deployment to complete..."
+echo "Finalizing Anthos Service Mesh deployment on Production cluster..."
 sleep 1m
 
 # Check that the control plane pods in istio-system are up
@@ -132,7 +132,7 @@ istioctl install \
 kubectl apply -f asm/canonical-service/controller.yaml
 
 # Sleep 1 minute
-echo "Waiting for Istio deployment to complete..."
+echo "Finalizing Anthos Service Mesh deployment on Development cluster (~1m)..."
 sleep 1m
 
 # Check that the control plane pods in istio-system are up

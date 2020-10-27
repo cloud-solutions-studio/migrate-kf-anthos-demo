@@ -2,7 +2,6 @@
 
 # Remove the .kube/config file and .kf file to ensure Production resources get deployed in the Production cluster
 rm ~/.kube/config
-rm ~/.kf
 
 # Connect to the Spring Media Development Cluster
 gcloud container clusters get-credentials ${PROD_CLUSTER_NAME} --project=${PROJECT_ID} --zone=${CLUSTER_LOCATION}
@@ -24,7 +23,7 @@ helm upgrade service-catalog \
 --set image=gcr.io/kf-releases/service-catalog:${KF_VERSION}
 
 # Wait for Service Catalog to finish deployment
-echo "Waiting 30s for Service Catalog deployment to complete..."
+echo "Finalizing Service Catalog deployment on Production cluster (~30s)..."
 sleep 30s
 
 # The Kf CLI is already installed on our local machine so we just need to 
@@ -48,7 +47,7 @@ kubectl patch configmaps config-defaults \
 -p="{\"data\":{\"spaceContainerRegistry\":\"${PROD_ARTIFACT_REGISTRY}\",\"spaceClusterDomains\":\"- domain: ${DOMAIN}\"}}"
 
 # Wait for Kf to finish deployment
-echo "Waiting 1 minute for Kf deployment to complete..."
+echo "Finalizing Kf deployment on Production cluster (~1m)..."
 sleep 1m
 
 # Test the Kf installation
@@ -68,8 +67,10 @@ kf create-service-broker minibroker \
   "http://minibroker-minibroker.minibroker.svc.cluster.local"
 
 # Wait for Minibroker to finish deployment
-echo "Waiting 2 minutes for Minibroker deployment to complete..."
-sleep 2m
+echo "Finalizing Minibroker deployment on Production cluster (~2m)..."
+sleep 1m
+echo "Finalizing Minibroker deployment on Production cluster (~1m)..."
+sleep 1m
 
 # Install the Spring Books application on Production cluster
 cd ~/migrate-kf-anthos-demo/spring-books
@@ -80,7 +81,7 @@ envsubst < spring-books.yaml | kubectl apply -f -
 kubectl apply -f spring-books-gateway.yaml
 
 # Wait for Spring Books to finish deployment
-echo "Waiting 1 minute for Spring Books deployment to complete..."
+echo "Finalizing Spring Books deployment on Production cluster (~1m)..."
 sleep 1m
 
 # Install Spring Music application on Production cluster
@@ -91,3 +92,7 @@ kf target -s spring-music
 kf create-service postgresql 11-7-0 spring-music-db -c '{"postgresqlDatabase":"smdb", "postgresDatabase":"smdb"}'
 kf push spring-music --no-start
 kf start spring-music
+
+# Delete Tekton pipeline pod
+export TEKTON_POD=$(kubectl get pods -n spring-music --field-selector="status.phase=Failed" -o json | jq -r ".items[0].metadata.name")
+kubectl delete pod ${TEKTON_POD} -n spring-music
