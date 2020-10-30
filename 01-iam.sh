@@ -101,11 +101,6 @@ gcloud iam service-accounts keys create ${SERVICE_ACCOUNT_KEY_PATH} \
 
 # Spring Books Application Workload Identity
 # -------------------------------
-# Configure kubectl command line access
-gcloud container clusters get-credentials ${PROD_CLUSTER_NAME} \
-    --project=${PROJECT_ID} \
-    --zone=${CLUSTER_LOCATION}
-
 # Spring Books Details Service Account
 gcloud iam service-accounts add-iam-policy-binding \
   --role roles/iam.workloadIdentityUser \
