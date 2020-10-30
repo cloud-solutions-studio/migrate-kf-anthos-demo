@@ -10,22 +10,6 @@ export CONTEXT=$(kubectl config current-context)
 # Install Tekton
 kubectl apply -f https://github.com/tektoncd/pipeline/releases/download/v0.14.3/release.yaml --context ${CONTEXT}
 
-# Create service-catalog namespace
-kubectl create namespace service-catalog --context ${CONTEXT}
-
-# Use Helm to upgrade Service Catalog.
-helm upgrade service-catalog \
-/tmp/service-catalog/charts/catalog/ \
---install \
---namespace service-catalog \
---kube-context ${CONTEXT} \
---values /tmp/service-catalog/values/catalog.yaml \
---set image=gcr.io/kf-releases/service-catalog:${KF_VERSION}
-
-# Wait for Service Catalog to finish deployment
-echo "Finalizing Service Catalog deployment on Production cluster (~30s)..."
-sleep 30s
-
 # The Kf CLI is already installed on our local machine so we just need to 
 # deploy the server-side components on the Prod cluster
 kubectl apply -f /tmp/kf.yaml --context ${CONTEXT}
