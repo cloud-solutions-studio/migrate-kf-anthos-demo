@@ -1,6 +1,5 @@
 # Install dependencies for Load Generators
 sudo apt-get -y install jq
-sudo apt-get install -y siege
 
 # Connect to the Spring Media cluster
 gcloud container clusters get-credentials ${PROD_CLUSTER_NAME} --project=${PROJECT_ID} --zone=${CLUSTER_LOCATION}
@@ -22,5 +21,10 @@ envsubst < spring-music-load-generator.yaml | kubectl apply -f -
 
 # Spring Books Load Generator
 # -------------------------------
-# Run Siege Load Generator in the background (will continue running if Cloud Shell is closed)
-siege http://${SPRING_BOOKS_URL}:80/productpage &
+cd ~/migrate-kf-anthos-demo/load-generators/spring-books
+
+# Insert the Istio Ingress Gateway IP into the Spring Books Load Generator yaml file
+sed -i "s/SPRING_BOOKS_URL/${SPRING_BOOKS_URL}/g" spring-books-load-generator.yaml
+
+# Deploy the Spring Books Load Generator to the cluster
+kubectl apply -f spring-books-load-generator.yaml

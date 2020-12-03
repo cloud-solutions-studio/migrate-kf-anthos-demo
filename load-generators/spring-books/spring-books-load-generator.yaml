@@ -11,38 +11,17 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: batch/v1
+kind: Job
 metadata:
   name: spring-books-load-generator
   namespace: default
 spec:
-  selector:
-    matchLabels:
-      app: spring-books-load-generator
-  replicas: 1
   template:
-    metadata:
-      labels:
-        app: spring-books-load-generator
-      annotations:
-        sidecar.istio.io/rewriteAppHTTPProbers: "true"
     spec:
-      terminationGracePeriodSeconds: 5
-      serviceAccountName: spring-media-cluster-sa
-      restartPolicy: Always
       containers:
-      - name: main
-        image: us-central1-docker.pkg.dev/migrate-kf-anthos-demo/spring-media-cluster/spring-books-load-generator:latest
-        env:
-        - name: FRONTEND_ADDR
-          value: "productpage.spring-books.svc.cluster.local"
-        - name: USERS
-          value: "20"
-        resources:
-          requests:
-            cpu: 300m
-            memory: 256Mi
-          limits:
-            cpu: 500m
-            memory: 512Mi
+      - name: siege
+        image: rippmn/siege
+        command: ["siege","http://34.123.233.26/productpage"]
+      restartPolicy: OnFailure
+  backoffLimit: 4
