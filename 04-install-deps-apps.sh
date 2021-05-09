@@ -34,8 +34,9 @@ kubectl patch configmaps config-defaults \
 -p="{\"data\":{\"spaceContainerRegistry\":\"${PROD_ARTIFACT_REGISTRY}\",\"spaceClusterDomains\":\"- domain: ${DOMAIN}\"}}"
 
 # Wait for Kf to finish deployment
-while [[ $(kubectl get pods -n kf -l app=controller -o 'jsonpath={..status.conditions[?(@.type=="Ready")].status}') != "True" ]]; do echo "Verifying Kf Controller deployment on Production cluster..." && sleep 1; done
 while [[ $(kubectl get pods -n kf -l app=webhook -o 'jsonpath={..status.conditions[?(@.type=="Ready")].status}') != "True" ]]; do echo "Verifying Kf Webhook deployment on Production cluster..." && sleep 1; done
+while [[ $(kubectl get pods -n kf -l app=controller -o 'jsonpath={..status.conditions[?(@.type=="Ready")].status}') != "True" ]]; do echo "Verifying Kf Controller deployment on Production cluster..." && sleep 1; done
+while [[ $(kubectl get pods -n kf -l app=subresource-apiserver -o 'jsonpath={..status.conditions[?(@.type=="Ready")].status}') != "True" ]]; do echo "Verifying Kf API Server deployment on Production cluster..." && sleep 1; done
 
 
 # Test the Kf installation

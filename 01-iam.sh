@@ -84,21 +84,36 @@ gcloud beta artifacts repositories add-iam-policy-binding ${DEV_CLUSTER_NAME} \
 
 # -------------------------------
 # Create an environment variable for the Connect service account that will register the cluster to the environ.
-export CONNECT_SERVICE_ACCOUNT=${PROD_CLUSTER_NAME}-connect
+export PROD_CONNECT_SERVICE_ACCOUNT=${PROD_CLUSTER_NAME}-connect
 
 # Bind the gkehub.connect IAM role to the Connect service account
 gcloud projects add-iam-policy-binding ${PROJECT_ID} \
-    --member="serviceAccount:${CONNECT_SERVICE_ACCOUNT}@${PROJECT_ID}.iam.gserviceaccount.com" \
+    --member="serviceAccount:${PROD_CONNECT_SERVICE_ACCOUNT}@${PROJECT_ID}.iam.gserviceaccount.com" \
     --role="roles/gkehub.connect"
 
 # Create an environment variable for the local filepath where you want to save the Connect service account's private key JSON file.
-export SERVICE_ACCOUNT_KEY_PATH=/tmp/creds/${CONNECT_SERVICE_ACCOUNT}-${PROJECT_ID}.json
+export PROD_SERVICE_ACCOUNT_KEY_PATH=/tmp/creds/${PROD_CONNECT_SERVICE_ACCOUNT}-${PROJECT_ID}.json
 
 # Download the Connect service account's private key JSON file.
-gcloud iam service-accounts keys create ${SERVICE_ACCOUNT_KEY_PATH} \
+gcloud iam service-accounts keys create ${PROD_SERVICE_ACCOUNT_KEY_PATH} \
     --project=${PROJECT_ID} \
-    --iam-account=${CONNECT_SERVICE_ACCOUNT}@${PROJECT_ID}.iam.gserviceaccount.com
+    --iam-account=${PROD_CONNECT_SERVICE_ACCOUNT}@${PROJECT_ID}.iam.gserviceaccount.com
 
+export DEV_CONNECT_SERVICE_ACCOUNT=${DEV_CLUSTER_NAME}-connect
+
+# Bind the gkehub.connect IAM role to the Connect service account
+gcloud projects add-iam-policy-binding ${PROJECT_ID} \
+    --member="serviceAccount:${DEV_CONNECT_SERVICE_ACCOUNT}@${PROJECT_ID}.iam.gserviceaccount.com" \
+    --role="roles/gkehub.connect"
+
+# Create an environment variable for the local filepath where you want to save the Connect service account's private key JSON file.
+export DEV_SERVICE_ACCOUNT_KEY_PATH=/tmp/creds/${DEV_CONNECT_SERVICE_ACCOUNT}-${PROJECT_ID}.json
+
+# Download the Connect service account's private key JSON file.
+gcloud iam service-accounts keys create ${DEV_SERVICE_ACCOUNT_KEY_PATH} \
+    --project=${PROJECT_ID} \
+    --iam-account=${DEV_CONNECT_SERVICE_ACCOUNT}@${PROJECT_ID}.iam.gserviceaccount.com
+    
 # Spring Books Application Workload Identity
 # -------------------------------
 # Spring Books Details Service Account

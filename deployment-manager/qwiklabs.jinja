@@ -80,6 +80,14 @@ resources:
   properties:
     consumerId: "project:{{ env['project'] }}"
     serviceName: cloudbuild.googleapis.com
+- type: deploymentmanager.v2.virtual.enableService
+  name: anthos-enable
+  metadata:
+    dependsOn:
+    - container-enable
+  properties:
+    consumerId: "project:{{ env['project'] }}"
+    serviceName: anthos.googleapis.com
 - type: gcp-types/iam-v1:projects.serviceAccounts
   name: spring-media-prod-sa
   metadata:
@@ -110,6 +118,16 @@ resources:
     accountId: spring-media-prod-connect
     serviceAccount:
       displayName: spring-media-prod-connect
+- type: gcp-types/iam-v1:projects.serviceAccounts
+  name: spring-media-dev-connect
+  metadata:
+    dependsOn:
+    - iamcredentials-enable
+    - iam-enable
+  properties:
+    accountId: spring-media-dev-connect
+    serviceAccount:
+      displayName: spring-media-dev-connect
 - type: gcp-types/iam-v1:projects.serviceAccounts
   name: spring-books-details
   metadata:
