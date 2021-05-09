@@ -75,12 +75,10 @@ istioctl install \
 # Run the following command to deploy the Canonical Service controller
 kubectl apply -f asm/canonical-service/controller.yaml
 
-# Sleep 1 minute
-echo "Finalizing Anthos Service Mesh deployment on Production cluster..."
-sleep 1m
-
-# Check that the control plane pods in istio-system are up
-# if [ (kubectl get pod -n istio-system | grep -e 'istio-ingressgateway.*1/1.*Running') -a (kubectl get pod -n istio-system | grep -e 'istiod.*1/1.*Running') ] then echo "Control Plane Pods Up!" else echo "ERROR: Control Plane Pods Not Up!" fi
+# Wait for Anthos Service Mesh deployment to finish on Production cluster
+while [[ $(kubectl get pods -n istio-system -l app=istiod -o 'jsonpath={..status.conditions[?(@.type=="Ready")].status}') != "True" ]]; do echo "Verifying Istiod deployment on Production cluster..." && sleep 1; done
+while [[ $(kubectl get pods -n istio-system -l app=istio-ingressgateway -o 'jsonpath={..status.conditions[?(@.type=="Ready")].status}') != "True" ]]; do echo "Verifying Istio Ingress Gateway deployment on Production cluster..." && sleep 1; done
+while [[ $(kubectl get pods -n asm-system -l control-plane=controller-manager -o 'jsonpath={..status.conditions[?(@.type=="Ready")].status}') != "True" ]]; do echo "Finalizing Anthos Service Mesh deployment on Production cluster..." && sleep 1; done
 
 # Run both the basic and the security tests
 asmctl validate --with-testing-workloads
@@ -131,12 +129,11 @@ istioctl install \
 # Run the following command to deploy the Canonical Service controller
 kubectl apply -f asm/canonical-service/controller.yaml
 
-# Sleep 1 minute
-echo "Finalizing Anthos Service Mesh deployment on Development cluster (~1m)..."
-sleep 1m
+# Wait for Anthos Service Mesh deployment to finish on Development cluster
+while [[ $(kubectl get pods -n istio-system -l app=istiod -o 'jsonpath={..status.conditions[?(@.type=="Ready")].status}') != "True" ]]; do echo "Verifying Istiod deployment on Development cluster..." && sleep 1; done
+while [[ $(kubectl get pods -n istio-system -l app=istio-ingressgateway -o 'jsonpath={..status.conditions[?(@.type=="Ready")].status}') != "True" ]]; do echo "Verifying Istio Ingress Gateway deployment on Development cluster..." && sleep 1; done
+while [[ $(kubectl get pods -n asm-system -l control-plane=controller-manager -o 'jsonpath={..status.conditions[?(@.type=="Ready")].status}') != "True" ]]; do echo "Finalizing Anthos Service Mesh deployment on Development cluster..." && sleep 1; done
 
-# Check that the control plane pods in istio-system are up
-# if [ (kubectl get pod -n istio-system | grep -e 'istio-ingressgateway.*1/1.*Running') -a (kubectl get pod -n istio-system | grep -e 'istiod.*1/1.*Running') ] then echo "Control Plane Pods Up!" else echo "ERROR: Control Plane Pods Not Up!" fi
 
 # Run both the basic and the security tests
 asmctl validate --with-testing-workloads
