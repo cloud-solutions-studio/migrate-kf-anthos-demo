@@ -3,12 +3,15 @@
 # Remove the .kube/config file and .kf file to ensure Production resources get deployed in the Production cluster
 rm ~/.kube/config
 
-# Connect to the Spring Media Development Cluster
+# Connect to the Spring Media Production Cluster
 gcloud container clusters get-credentials ${PROD_CLUSTER_NAME} --project=${PROJECT_ID} --zone=${CLUSTER_LOCATION}
 export CONTEXT=$(kubectl config current-context)
 
 # Install Tekton
-kubectl apply -f https://github.com/tektoncd/pipeline/releases/download/v0.14.3/release.yaml --context ${CONTEXT}
+kubectl apply -f https://github.com/tektoncd/pipeline/releases/download/v0.19.0/release.yaml --context ${CONTEXT}
+
+while [[ $(kubectl get pods -n tekton-pipelines -l app=tekton-pipelines-controller -o 'jsonpath={..status.conditions[?(@.type=="Ready")].status}') != "True" ]]; do echo "Verifying Tekton Pipelines Controller deployment on Production cluster..." && sleep 1; done
+while [[ $(kubectl get pods -n tekton-pipelines -l app=tekton-pipelines-webhook -o 'jsonpath={..status.conditions[?(@.type=="Ready")].status}') != "True" ]]; do echo "Verifying Tekton Pipelines Webhook deployment on Production cluster..." && sleep 1; done
 
 # The Kf CLI is already installed on our local machine so we just need to 
 # deploy the server-side components on the Prod cluster
@@ -31,8 +34,9 @@ kubectl patch configmaps config-defaults \
 -p="{\"data\":{\"spaceContainerRegistry\":\"${PROD_ARTIFACT_REGISTRY}\",\"spaceClusterDomains\":\"- domain: ${DOMAIN}\"}}"
 
 # Wait for Kf to finish deployment
-echo "Finalizing Kf deployment on Production cluster (~1m)..."
-sleep 1m
+while [[ $(kubectl get pods -n kf -l app=controller -o 'jsonpath={..status.conditions[?(@.type=="Ready")].status}') != "True" ]]; do echo "Verifying Kf Controller deployment on Production cluster..." && sleep 1; done
+while [[ $(kubectl get pods -n kf -l app=webhook -o 'jsonpath={..status.conditions[?(@.type=="Ready")].status}') != "True" ]]; do echo "Verifying Kf Webhook deployment on Production cluster..." && sleep 1; done
+
 
 # Test the Kf installation
 kf doctor
