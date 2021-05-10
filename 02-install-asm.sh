@@ -14,21 +14,36 @@ sha256sum -c install_asm.sha256
 # Make the installation script executable
 chmod +x install_asm
 
-echo "Starting installation of ASM on Spring Media Prod and Kf clusters..."
 # Spring Media Production Cluster
 # -------------------------------
 # Install Anthos Service Mesh with a fully-managed Control Plane and register to the project's environ
-./install_asm --mode install --managed -p ${PROJECT_ID} \
-    -l ${CLUSTER_LOCATION} -n ${PROD_CLUSTER_NAME} -v \
-    --output_dir ${PROD_CLUSTER_NAME} --enable-all --enable-registration >> "/tmp/spring_media_prod_asm.log" &
-spring_media_prod_asm_pid=$!
+spring_media_prod_asm () {
+    ./install_asm --mode install --managed -p ${PROJECT_ID} \
+        -l ${CLUSTER_LOCATION} -n ${PROD_CLUSTER_NAME} -v \
+        --output_dir ${PROD_CLUSTER_NAME} --enable-all --enable-registration
+
+    gcloud container clusters get-credentials ${PROD_CLUSTER_NAME} --zone ${CLUSTER_LOCATION} --project ${PROJECT_ID}
+    
+    istioctl install -f ~/${PROD_CLUSTER_NAME}/managed_control_plane_gateway.yaml --set revision=asm-managed -d ~/${PROD_CLUSTER_NAME}/istio-1.9.1-asm.1/manifests/
+}
 
 # Kf Cluster
 # -------------------------------
 # Install Anthos Service Mesh with a fully-managed Control Plane and register to the project's environ
-./install_asm --mode install --managed -p ${PROJECT_ID} \
-    -l ${CLUSTER_LOCATION} -n ${KF_CLUSTER_NAME} -v \
-    --output_dir ${KF_CLUSTER_NAME} --enable-all >> "/tmp/kf_cluster_asm.log" &
+kf_cluster_asm () {
+    ./install_asm --mode install --managed -p ${PROJECT_ID} \
+        -l ${CLUSTER_LOCATION} -n ${KF_CLUSTER_NAME} -v \
+        --output_dir ${KF_CLUSTER_NAME} --enable-all
+
+    gcloud container clusters get-credentials ${KF_CLUSTER_NAME} --zone ${CLUSTER_LOCATION} --project ${PROJECT_ID}
+
+    istioctl install -f ~/${KF_CLUSTER_NAME}/managed_control_plane_gateway.yaml --set revision=asm-managed -d ~/${PROD_CLUSTER_NAME}/istio-1.9.1-asm.1/manifests/
+}
+
+echo "Starting installation of ASM on Spring Media Prod and Kf clusters..."
+spring_media_prod_asm >> "/tmp/spring_media_prod_asm.log" &
+spring_media_prod_asm_pid=$!
+kf_cluster_asm >> "/tmp/kf_cluster_asm.log" &
 kf_cluster_asm_pid=$!
 
 wait $spring_media_prod_asm_pid
