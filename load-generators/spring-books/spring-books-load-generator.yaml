@@ -22,6 +22,6 @@ spec:
       containers:
       - name: siege
         image: rippmn/siege
-        command: ["siege","http://34.123.233.26/productpage"]
+        command: ["siege","http://SPRING_BOOKS_URL/productpage"]
       restartPolicy: OnFailure
   backoffLimit: 4

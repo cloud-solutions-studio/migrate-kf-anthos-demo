@@ -24,7 +24,7 @@ spring_media_prod_asm () {
 
     gcloud container clusters get-credentials ${PROD_CLUSTER_NAME} --zone ${CLUSTER_LOCATION} --project ${PROJECT_ID}
     
-    istioctl install -f ~/${PROD_CLUSTER_NAME}/managed_control_plane_gateway.yaml --set revision=asm-managed -d ~/${PROD_CLUSTER_NAME}/istio-1.9.1-asm.1/manifests/
+    istioctl install -f ~/${PROD_CLUSTER_NAME}/managed_control_plane_gateway.yaml --set revision=asm-managed -d ~/${PROD_CLUSTER_NAME}/istio-1.9.1-asm.1/manifests/ -y
 }
 
 # Kf Cluster
@@ -37,7 +37,7 @@ kf_cluster_asm () {
 
     gcloud container clusters get-credentials ${KF_CLUSTER_NAME} --zone ${CLUSTER_LOCATION} --project ${PROJECT_ID}
 
-    istioctl install -f ~/${KF_CLUSTER_NAME}/managed_control_plane_gateway.yaml --set revision=asm-managed -d ~/${PROD_CLUSTER_NAME}/istio-1.9.1-asm.1/manifests/
+    istioctl install -f ~/${KF_CLUSTER_NAME}/managed_control_plane_gateway.yaml --set revision=asm-managed -d ~/${PROD_CLUSTER_NAME}/istio-1.9.1-asm.1/manifests/ -y
 }
 
 echo "Starting installation of ASM on Spring Media Prod and Kf clusters..."
